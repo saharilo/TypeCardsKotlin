@@ -1,12 +1,22 @@
 package ru.netology
 
 fun main () {
-    val result = commissionCard("Mastercard", 50000, 30000)
-    println("Комиссия за перевод составит $result рублей.")
+    val result = commissionCard("Mastercard", 80000, 30000)
+
+    when (result){
+        -1 -> println("Операция заблокирована. Превышен дневной лимит!")
+        -2 -> println("Операция заблокирована. Превышен месячный лимит!")
+        else -> println("Комиссия за перевод составит $result рублей.")
+    }
+
+
 }
 
-fun commissionCard(typeCard: String = "Мир", sumMonthTransfer: Int = 0, transfer: Int): Int {
-   return when (typeCard) {
+fun commissionCard(typeCard: String = "Мир", sumMonthTransfer: Int = 0, transfer: Int,
+                   dailyLimit: Int = 150_000, monthLimit: Int = 600_000): Int {
+    if (transfer > dailyLimit) return -1
+    if (transfer + sumMonthTransfer > monthLimit) return -2
+    return when (typeCard) {
        "Мир" -> 0
        "Visa" -> {
            val result = (transfer * 0.0075).toInt()
