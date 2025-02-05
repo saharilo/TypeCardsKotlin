@@ -23,7 +23,7 @@ fun commissionCard(typeCard: String = "Мир", sumMonthTransfer: Int = 0, trans
            if (result < 35) 35 else result
        }
        "Mastercard" -> {
-           val upLimit = sumMonthTransfer + transfer - 75000
+           val upLimit = if (sumMonthTransfer > 75000) transfer else sumMonthTransfer + transfer - 75000
            if (upLimit <= 0) 0 else (upLimit * 0.006 + 20).toInt()
        }
        else -> -1
